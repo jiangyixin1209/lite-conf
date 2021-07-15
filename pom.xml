@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>top.jiangyixin.eos</groupId>
+  <artifactId>eos-conf</artifactId>
+  <packaging>pom</packaging>
+  <name>${project.artifactId}</name>
+  <version>1.0.0</version>
+  <description>EOS Conf配置中心POM</description>
+  <modules>
+    <module>eos-conf-client</module>
+  </modules>
+
+  <properties>
+    <spring.version>5.2.15.RELEASE</spring.version>
+    <curator.version>2.7.0</curator.version>
+    <jackson.version>2.12.1</jackson.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- Spring -->
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+
+      <!-- jackson -->
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-core</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+
+      <!-- ZK Client -->
+      <dependency>
+        <groupId>org.apache.curator</groupId>
+        <artifactId>curator-recipes</artifactId>
+        <version>${curator.version}</version>
+      </dependency>
+
+      <!-- Lombok -->
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>1.18.12</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+</project>
