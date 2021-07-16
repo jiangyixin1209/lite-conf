@@ -39,4 +39,9 @@ public final class LiteConstant {
      */
     public static final String ZK_CHECK_TEMP_TIME = "zookeeper.check.temp.time";
     
+    /**
+     * 配置所在包路径，多个用逗号隔开
+     */
+    public static final String CONF_PACKAGES = "lite.conf.package";
+    
 }
