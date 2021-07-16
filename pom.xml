@@ -4,14 +4,14 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>top.jiangyixin.eos</groupId>
-  <artifactId>eos-conf</artifactId>
+  <groupId>top.jiangyixin</groupId>
+  <artifactId>lite-conf</artifactId>
   <packaging>pom</packaging>
   <name>${project.artifactId}</name>
   <version>1.0.0</version>
   <description>EOS Conf配置中心POM</description>
   <modules>
-    <module>eos-conf-client</module>
+    <module>lite-conf-client</module>
   </modules>
 
   <properties>
