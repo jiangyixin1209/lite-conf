@@ -1,7 +1,5 @@
-package top.jiangyixin.eos.conf.client.zk;
+package top.jiangyixin.lite.conf.client.zk;
 
-import javax.sql.ConnectionEvent;
-import javax.sql.ConnectionEventListener;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.state.ConnectionState;
 import org.apache.curator.framework.state.ConnectionStateListener;

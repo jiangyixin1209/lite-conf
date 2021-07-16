@@ -1,4 +1,4 @@
-package top.jiangyixin.eos.conf.client.common;
+package top.jiangyixin.lite.conf.client.common;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
  * @version 1.0
  * @date 2021/7/15 下午4:32
  */
-public final class EosConstant {
+public final class LiteConstant {
     
     /** 根目录 **/
     public static final String ZK_ROOT_PATH = "/eos_conf";

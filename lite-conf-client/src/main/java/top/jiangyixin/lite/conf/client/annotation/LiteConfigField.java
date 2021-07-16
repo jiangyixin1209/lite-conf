@@ -1,4 +1,4 @@
-package top.jiangyixin.eos.conf.client.annotation;
+package top.jiangyixin.lite.conf.client.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.METHOD, ElementType.ANNOTATION_TYPE})
-public @interface EosConfigField {
+public @interface LiteConfigField {
     
     /** 字段描述 **/
     String value();

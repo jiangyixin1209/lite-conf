@@ -1,4 +1,4 @@
-package top.jiangyixin.eos.conf.client.core;
+package top.jiangyixin.lite.conf.client.core;
 
 /**
  * TODO

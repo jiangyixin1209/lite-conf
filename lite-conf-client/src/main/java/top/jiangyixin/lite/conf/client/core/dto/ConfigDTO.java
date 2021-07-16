@@ -1,4 +1,4 @@
-package top.jiangyixin.eos.conf.client.core.dto;
+package top.jiangyixin.lite.conf.client.core.dto;
 
 import java.time.LocalDateTime;
 import lombok.Data;

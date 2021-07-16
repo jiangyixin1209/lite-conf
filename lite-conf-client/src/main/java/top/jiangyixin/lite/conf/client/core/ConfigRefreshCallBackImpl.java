@@ -1,8 +1,8 @@
-package top.jiangyixin.eos.conf.client.core;
+package top.jiangyixin.lite.conf.client.core;
 
 import java.lang.reflect.Method;
 import lombok.extern.slf4j.Slf4j;
-import top.jiangyixin.eos.conf.client.core.dto.ConfigDTO;
+import top.jiangyixin.lite.conf.client.core.dto.ConfigDTO;
 
 /**
  * TODO

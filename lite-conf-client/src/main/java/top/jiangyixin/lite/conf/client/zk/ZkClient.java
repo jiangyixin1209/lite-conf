@@ -1,4 +1,4 @@
-package top.jiangyixin.eos.conf.client.zk;
+package top.jiangyixin.lite.conf.client.zk;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -10,8 +10,8 @@ import org.apache.curator.framework.recipes.cache.NodeCache;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.data.Stat;
-import top.jiangyixin.eos.conf.client.common.EosConstant;
-import top.jiangyixin.eos.conf.client.core.ConfigRefreshCallBack;
+import top.jiangyixin.lite.conf.client.common.LiteConstant;
+import top.jiangyixin.lite.conf.client.core.ConfigRefreshCallBack;
 
 /**
  * zookeeper客户端
@@ -58,7 +58,7 @@ public class ZkClient {
      */
     public List<String> getAllServer() {
         try{
-            return client.getChildren().forPath(EosConstant.ZK_SERVER_REGISTRY);
+            return client.getChildren().forPath(LiteConstant.ZK_SERVER_REGISTRY);
         } catch (Exception e) {
             log.error("获取服务端地址异常", e);
         }
@@ -70,9 +70,9 @@ public class ZkClient {
      */
     public void createRootPath() {
         try{
-            Stat stat = client.checkExists().forPath(EosConstant.ZK_ROOT_PATH);
+            Stat stat = client.checkExists().forPath(LiteConstant.ZK_ROOT_PATH);
             if (stat == null) {
-                client.create().withMode(CreateMode.PERSISTENT).forPath(EosConstant.ZK_ROOT_PATH);
+                client.create().withMode(CreateMode.PERSISTENT).forPath(LiteConstant.ZK_ROOT_PATH);
             }
         } catch (Exception e) {
             log.error("创建根目录失败", e);
@@ -94,15 +94,15 @@ public class ZkClient {
      */
     public void doRegisterServer(String address) {
         try{
-            Stat stat = client.checkExists().forPath(EosConstant.ZK_SERVER_REGISTRY);
+            Stat stat = client.checkExists().forPath(LiteConstant.ZK_SERVER_REGISTRY);
             if (stat == null) {
-                client.create().withMode(CreateMode.EPHEMERAL).forPath(EosConstant.ZK_SERVER_REGISTRY);
+                client.create().withMode(CreateMode.EPHEMERAL).forPath(LiteConstant.ZK_SERVER_REGISTRY);
             }
-            String serverAddressPath = EosConstant.ZK_SERVER_REGISTRY.concat("/").concat(address);
+            String serverAddressPath = LiteConstant.ZK_SERVER_REGISTRY.concat("/").concat(address);
             // 两种情况会进行服务的注册
             // 1. 启动时注册服务
             // 2. 客户端断开，重新注册服务，即使客户端断开连接，临时节点也需要延迟N秒后才会消失，需要循环判断注册
-            for (int i = 0; i <= Integer.getInteger(EosConstant.ZK_CHECK_TEMP_TIME, 30); i++) {
+            for (int i = 0; i <= Integer.getInteger(LiteConstant.ZK_CHECK_TEMP_TIME, 30); i++) {
                 if (client.checkExists().forPath(serverAddressPath) == null) {
                     client.create().withMode(CreateMode.EPHEMERAL).forPath(serverAddressPath);
                     break;
@@ -134,7 +134,7 @@ public class ZkClient {
     public void createNode(String path, CreateMode mode) {
         try{
             if (CreateMode.EPHEMERAL == mode) {
-                for (int i = 1; i <= Integer.getInteger(EosConstant.ZK_CHECK_TEMP_TIME, 30); i++) {
+                for (int i = 1; i <= Integer.getInteger(LiteConstant.ZK_CHECK_TEMP_TIME, 30); i++) {
                     Stat stat = client.checkExists().forPath(path);
                     if (stat == null) {
                         client.create().withMode(mode).forPath(path);

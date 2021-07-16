@@ -1,4 +1,4 @@
-package top.jiangyixin.eos.conf.client.util;
+package top.jiangyixin.lite.conf.client.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.StringWriter;
