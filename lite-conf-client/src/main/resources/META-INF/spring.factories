@@ -1,0 +1,1 @@
+org.springframework.context.ApplicationListener=\top.jiangyixin.lite.conf.client.LiteConfApplicationContextInitializer

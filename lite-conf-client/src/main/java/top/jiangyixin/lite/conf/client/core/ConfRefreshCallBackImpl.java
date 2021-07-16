@@ -2,7 +2,7 @@ package top.jiangyixin.lite.conf.client.core;
 
 import java.lang.reflect.Method;
 import lombok.extern.slf4j.Slf4j;
-import top.jiangyixin.lite.conf.client.core.dto.ConfigDTO;
+import top.jiangyixin.lite.conf.client.core.dto.ConfDTO;
 
 /**
  * TODO
@@ -12,20 +12,20 @@ import top.jiangyixin.lite.conf.client.core.dto.ConfigDTO;
  * @date 2021/7/15 下午5:46
  */
 @Slf4j
-public class ConfigRefreshCallBackImpl implements ConfigRefreshCallBack {
+public class ConfRefreshCallBackImpl implements ConfRefreshCallBack {
     
     @Override
     public void call(String path) {
     
     }
     
-    private void executeCustomCallBack(Object bean, ConfigDTO config) {
+    private void executeCustomCallBack(Object bean, ConfDTO config) {
         Class<?>[] interfaces = bean.getClass().getInterfaces();
         if (interfaces.length > 0) {
             for (Class<?> cls : interfaces) {
-                if (ConfigUpdateCustomCallBack.class.getSimpleName().equals(cls.getSimpleName())) {
+                if (ConfUpdateCustomCallBack.class.getSimpleName().equals(cls.getSimpleName())) {
                     try{
-                        Method method = bean.getClass().getDeclaredMethod("reload", ConfigDTO.class);
+                        Method method = bean.getClass().getDeclaredMethod("reload", ConfDTO.class);
                         method.invoke(bean, config);
                     } catch (Exception e) {
                         log.error("执行用户自定义回调方法异常", e);

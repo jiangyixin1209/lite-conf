@@ -11,7 +11,7 @@ import lombok.Data;
  * @date 2021/7/15 下午5:50
  */
 @Data
-public class ConfigDTO {
+public class ConfDTO {
     private String id;
     private String env;
     private String project;

@@ -10,8 +10,9 @@ import org.apache.curator.framework.recipes.cache.NodeCache;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.data.Stat;
-import top.jiangyixin.lite.conf.client.common.LiteConstant;
-import top.jiangyixin.lite.conf.client.core.ConfigRefreshCallBack;
+import org.springframework.util.StringUtils;
+import top.jiangyixin.lite.conf.client.common.LiteConfConstant;
+import top.jiangyixin.lite.conf.client.core.ConfRefreshCallBack;
 
 /**
  * zookeeper客户端
@@ -58,7 +59,7 @@ public class ZkClient {
      */
     public List<String> getAllServer() {
         try{
-            return client.getChildren().forPath(LiteConstant.ZK_SERVER_REGISTRY);
+            return client.getChildren().forPath(LiteConfConstant.ZK_SERVER_REGISTRY);
         } catch (Exception e) {
             log.error("获取服务端地址异常", e);
         }
@@ -70,9 +71,9 @@ public class ZkClient {
      */
     public void createRootPath() {
         try{
-            Stat stat = client.checkExists().forPath(LiteConstant.ZK_ROOT_PATH);
+            Stat stat = client.checkExists().forPath(LiteConfConstant.ZK_ROOT_PATH);
             if (stat == null) {
-                client.create().withMode(CreateMode.PERSISTENT).forPath(LiteConstant.ZK_ROOT_PATH);
+                client.create().withMode(CreateMode.PERSISTENT).forPath(LiteConfConstant.ZK_ROOT_PATH);
             }
         } catch (Exception e) {
             log.error("创建根目录失败", e);
@@ -94,15 +95,15 @@ public class ZkClient {
      */
     public void doRegisterServer(String address) {
         try{
-            Stat stat = client.checkExists().forPath(LiteConstant.ZK_SERVER_REGISTRY);
+            Stat stat = client.checkExists().forPath(LiteConfConstant.ZK_SERVER_REGISTRY);
             if (stat == null) {
-                client.create().withMode(CreateMode.EPHEMERAL).forPath(LiteConstant.ZK_SERVER_REGISTRY);
+                client.create().withMode(CreateMode.EPHEMERAL).forPath(LiteConfConstant.ZK_SERVER_REGISTRY);
             }
-            String serverAddressPath = LiteConstant.ZK_SERVER_REGISTRY.concat("/").concat(address);
+            String serverAddressPath = LiteConfConstant.ZK_SERVER_REGISTRY.concat("/").concat(address);
             // 两种情况会进行服务的注册
             // 1. 启动时注册服务
             // 2. 客户端断开，重新注册服务，即使客户端断开连接，临时节点也需要延迟N秒后才会消失，需要循环判断注册
-            for (int i = 0; i <= Integer.getInteger(LiteConstant.ZK_CHECK_TEMP_TIME, 30); i++) {
+            for (int i = 0; i <= Integer.getInteger(LiteConfConstant.ZK_CHECK_TEMP_TIME, 30); i++) {
                 if (client.checkExists().forPath(serverAddressPath) == null) {
                     client.create().withMode(CreateMode.EPHEMERAL).forPath(serverAddressPath);
                     break;
@@ -134,7 +135,7 @@ public class ZkClient {
     public void createNode(String path, CreateMode mode) {
         try{
             if (CreateMode.EPHEMERAL == mode) {
-                for (int i = 1; i <= Integer.getInteger(LiteConstant.ZK_CHECK_TEMP_TIME, 30); i++) {
+                for (int i = 1; i <= Integer.getInteger(LiteConfConstant.ZK_CHECK_TEMP_TIME, 30); i++) {
                     Stat stat = client.checkExists().forPath(path);
                     if (stat == null) {
                         client.create().withMode(mode).forPath(path);
@@ -159,11 +160,26 @@ public class ZkClient {
     }
     
     /**
+     * 设置节点值
+     * @param path 节点路径
+     * @param value 节点值
+     */
+    public void setNodeValue(String path, String value) {
+        try{
+            if (StringUtils.hasText(value)) {
+                client.setData().forPath(path, value.getBytes());
+            }
+        } catch (Exception e) {
+            log.error("设置节点值异常", e);
+        }
+    }
+    
+    /**
      * 监控节点是否被修改
      * @param path 节点路径
      * @param callBack 回调
      */
-    public void monitor(String path, ConfigRefreshCallBack callBack) {
+    public void monitor(String path, ConfRefreshCallBack callBack) {
         try{
             NodeCache nodeCache = new NodeCache(client, path);
             nodeCache.getListenable().addListener(() -> {
@@ -173,5 +189,20 @@ public class ZkClient {
         } catch (Exception e) {
             log.error("监控节点{}异常", path);
         }
+    }
+    
+    /**
+     * 拼接节点路径
+     * @param objects objects
+     * @return 节点路径
+     */
+    public static String buildPath(Object...objects) {
+        StringBuilder sb = new StringBuilder();
+        for (Object obj : objects) {
+            sb.append(obj);
+            sb.append("/");
+        }
+        sb.delete(sb.length() - 1, sb.length());
+        return sb.toString();
     }
 }

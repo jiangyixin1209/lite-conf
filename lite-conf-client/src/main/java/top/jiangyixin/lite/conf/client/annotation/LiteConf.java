@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface LiteConfig {
+public @interface LiteConf {
     
     /** 配置名称，不填写默认为类名 **/
     String value() default "";
@@ -23,4 +23,9 @@ public @interface LiteConfig {
     /** key前缀 **/
     String prefix() default "";
     
+    /** 系统所属环境，例如 test、prod **/
+    String env() default "";
+    
+    /** 是否设置为环境变量 **/
+    boolean isSetEnv() default true;
 }

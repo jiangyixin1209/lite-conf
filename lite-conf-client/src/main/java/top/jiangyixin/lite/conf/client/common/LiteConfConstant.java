@@ -10,13 +10,18 @@ import java.util.List;
  * @version 1.0
  * @date 2021/7/15 下午4:32
  */
-public final class LiteConstant {
+public final class LiteConfConstant {
     
     /** 根目录 **/
-    public static final String ZK_ROOT_PATH = "/eos_conf";
+    public static final String ZK_ROOT_PATH = "/lite_conf";
     
     /** 服务端注册目录 **/
     public static final String ZK_SERVER_REGISTRY = ZK_ROOT_PATH.concat("/server_registry");
+    
+    /**
+     * zookeeper 链接地址
+     */
+    public static final String ZK_URL = "zookeeper.url";
     
     /** 配置支持的数据类型 **/
     public static List<String> SUPPORT_VALUE_TYPE = Arrays.asList(
@@ -44,4 +49,18 @@ public final class LiteConstant {
      */
     public static final String CONF_PACKAGES = "lite.conf.package";
     
+    /**
+     * 数据加载方式
+     */
+    public static final String DATA_LOAD_TYPE = "lite.data.load.type";
+    
+    /**
+     * client项目所在的机器ip
+     */
+    public static final String SERVER_IP = "server.ip";
+    
+    /**
+     * client项目暴露的端口
+     */
+    public static final String SERVER_PORT = "server.port";
 }

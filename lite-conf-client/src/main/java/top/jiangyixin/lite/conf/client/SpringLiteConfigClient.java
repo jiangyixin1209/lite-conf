@@ -3,6 +3,10 @@ package top.jiangyixin.lite.conf.client;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.util.StringUtils;
 import top.jiangyixin.lite.conf.client.annotation.LiteConf;
 import top.jiangyixin.lite.conf.client.util.ClassUtils;
@@ -14,7 +18,7 @@ import top.jiangyixin.lite.conf.client.util.ClassUtils;
  * @version 1.0
  * @date 2021/7/16 上午9:41
  */
-public class LiteConfigClient {
+public class SpringLiteConfigClient implements ApplicationContextAware, InitializingBean {
     
     public static void init(String basePackages) {
         LiteConfClientInitializer initializer = new LiteConfClientInitializer();
@@ -38,4 +42,13 @@ public class LiteConfigClient {
         }
     }
     
+    @Override
+    public void afterPropertiesSet() throws Exception {
+    
+    }
+    
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    
+    }
 }

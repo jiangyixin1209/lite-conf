@@ -7,7 +7,7 @@ package top.jiangyixin.lite.conf.client.core;
  * @version 1.0
  * @date 2021/7/15 下午5:43
  */
-public interface ConfigRefreshCallBack {
+public interface ConfRefreshCallBack {
     
     /**
      * 刷新回调
