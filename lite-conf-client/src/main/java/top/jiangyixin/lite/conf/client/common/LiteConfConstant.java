@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Eos配置常量类
+ * Lite Conf 配置常量类
  *
  * @author jiangyixin
  * @version 1.0

@@ -12,16 +12,46 @@
   <description>EOS Conf配置中心POM</description>
   <modules>
     <module>lite-conf-client</module>
+    <module>lite-conf-web</module>
   </modules>
 
   <properties>
     <spring.version>5.2.15.RELEASE</spring.version>
     <curator.version>2.7.0</curator.version>
     <jackson.version>2.12.1</jackson.version>
+    <mybatis-plus.version>3.4.1</mybatis-plus.version>
+    <mysql.version>8.0.23</mysql.version>
+    <druid.version>1.1.21</druid.version>
   </properties>
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>2.3.4.RELEASE</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>com.baomidou</groupId>
+        <artifactId>mybatis-plus-boot-starter</artifactId>
+        <version>${mybatis-plus.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>${mysql.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>druid-spring-boot-starter</artifactId>
+        <version>${druid.version}</version>
+      </dependency>
+
       <!-- Spring -->
       <dependency>
         <groupId>org.springframework</groupId>

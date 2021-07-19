@@ -23,7 +23,7 @@ import top.jiangyixin.lite.conf.client.core.ConfRefreshCallBack;
  */
 @Slf4j
 public class ZkClient {
-    private static final AtomicBoolean isRegister = new AtomicBoolean(false);
+    private static final AtomicBoolean IS_REGISTER = new AtomicBoolean(false);
     private static CuratorFramework client = null;
     
     private static class ZkClientHolder {
@@ -139,10 +139,10 @@ public class ZkClient {
                     Stat stat = client.checkExists().forPath(path);
                     if (stat == null) {
                         client.create().withMode(mode).forPath(path);
-                        isRegister.compareAndSet(false, true);
+                        IS_REGISTER.compareAndSet(false, true);
                         break;
                     }
-                    if (!isRegister.get()) {
+                    if (!IS_REGISTER.get()) {
                         TimeUnit.SECONDS.sleep(1);
                         log.info("注册节点中。。。。。");
                     }

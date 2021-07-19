@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/lite_conf?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Hongkong&createDatabaseIfNotExist=true
+    username: ${MYSQL_USERNAME:root}
+    password: ${MYSQL_PASSWORD:gllue123}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initial-size: 3
+      min-idle: 1
+      max-active: 10
+      max-wait: 60000
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 1000
+

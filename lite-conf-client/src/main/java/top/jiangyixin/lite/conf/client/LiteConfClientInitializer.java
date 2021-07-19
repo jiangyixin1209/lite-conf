@@ -4,17 +4,20 @@ import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.zookeeper.CreateMode;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 import top.jiangyixin.lite.conf.client.annotation.LiteConf;
 import top.jiangyixin.lite.conf.client.annotation.LiteConfField;
 import top.jiangyixin.lite.conf.client.common.LiteConfConstant;
+import top.jiangyixin.lite.conf.client.core.ConfRefreshCallBackImpl;
+import top.jiangyixin.lite.conf.client.core.Conf;
 import top.jiangyixin.lite.conf.client.enumerate.DataLoadTypeEnum;
+import top.jiangyixin.lite.conf.client.util.BeanUtils;
 import top.jiangyixin.lite.conf.client.util.LiteConfUtils;
 import top.jiangyixin.lite.conf.client.util.ReflectUtils;
 import top.jiangyixin.lite.conf.client.zk.ZkClient;
@@ -131,10 +134,38 @@ public class LiteConfClientInitializer implements ApplicationContextAware, Initi
             if (isWatchNode && LiteConfUtils.getDataLoadType() == DataLoadTypeEnum.REMOTE) {
                 String localIp = LiteConfUtils.getLocalIp().concat(":").concat(LiteConfUtils.getServerPort());
                 ZkClient zkClient = LiteConfUtils.getZkClient();
-//                String configFileNode = ZkClient.buildPath()
-//                zkClient.createNode();
+                // config node path
+                String nodePath = ZkClient.buildPath(LiteConfConstant.ZK_ROOT_PATH, env, system);
+                zkClient.createNode(nodePath, CreateMode.PERSISTENT);
+                String localNodePath = nodePath.concat(localIp + "&" + configFileName);
+                zkClient.createNode(localNodePath, CreateMode.EPHEMERAL);
+                zkClient.monitor(localNodePath, new ConfRefreshCallBackImpl());
             }
-            
+    
+            Field[] declaredFields = bean.getClass().getDeclaredFields();
+            for (Field filed : declaredFields) {
+                filed.setAccessible(true);
+                LiteConfField confField = filed.getAnnotation(LiteConfField.class);
+                String desc = confField.value();
+                String key = filed.getName();
+                Object value = ReflectUtils.callGetMethod(key, bean);
+                Conf conf = new Conf();
+                conf.setEnv(env);
+                conf.setSystem(system);
+                conf.setConfig(configFileName);
+                conf.setKey(key);
+                conf.setValue(value);
+                conf.setDesc(desc);
+                String realPrefix = "".equals(prefix) ? "" : prefix + ".";
+                if (LiteConfUtils.getDataLoadType() == DataLoadTypeEnum.LOCAL) {
+                    initLocalConf(conf, filed, bean, isSetEnv, realPrefix);
+                } else {
+                
+                }
+            }
+            LOCAL_CONF_DATA_MAP.put(className, bean);
+            CONF_NAME_LOCAL_CONF_DATA_MAP.put(ZkClient.buildPath(env, system, configFileName), className);
+            log.info("init conf class {}", className);
         }
     }
     
@@ -144,5 +175,16 @@ public class LiteConfClientInitializer implements ApplicationContextAware, Initi
             fileName = bean.getClass().getSimpleName();
         }
         return fileName;
+    }
+    
+    private void initLocalConf(Conf conf, Field field, Object object, boolean isSetEnv, String prefix) {
+        try{
+            if (isSetEnv) {
+                System.setProperty(prefix.concat(conf.getKey()), conf.getValue().toString());
+            }
+            BeanUtils.setValue(field, object, conf.getValue());
+        } catch (Exception e) {
+            log.error("设置conf失败", e);
+        }
     }
 }

@@ -1,4 +1,4 @@
-package top.jiangyixin.lite.conf.client.core.dto;
+package top.jiangyixin.lite.conf.client.core;
 
 import java.time.LocalDateTime;
 import lombok.Data;
@@ -11,14 +11,14 @@ import lombok.Data;
  * @date 2021/7/15 下午5:50
  */
 @Data
-public class ConfDTO {
+public class Conf {
     private String id;
     private String env;
-    private String project;
+    private String system;
     private String config;
     private String key;
-    private String value;
-    private String note;
+    private Object value;
+    private String desc;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 }
