@@ -8,7 +8,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.util.StringUtils;
-import top.jiangyixin.lite.conf.client.annotation.LiteConf;
+import top.jiangyixin.lite.conf.core.annotation.LiteConf;
 import top.jiangyixin.lite.conf.client.util.ClassUtils;
 
 /**

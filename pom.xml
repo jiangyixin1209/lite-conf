@@ -8,20 +8,24 @@
   <artifactId>lite-conf</artifactId>
   <packaging>pom</packaging>
   <name>${project.artifactId}</name>
-  <version>1.0.0</version>
+  <version>${lite-conf.version}</version>
   <description>EOS Conf配置中心POM</description>
   <modules>
     <module>lite-conf-client</module>
     <module>lite-conf-web</module>
+    <module>lite-conf-spring-boot-starter</module>
+    <module>lite-conf-core</module>
   </modules>
 
   <properties>
+    <lite-conf.version>1.0.0</lite-conf.version>
     <spring.version>5.2.15.RELEASE</spring.version>
     <curator.version>2.7.0</curator.version>
     <jackson.version>2.12.1</jackson.version>
     <mybatis-plus.version>3.4.1</mybatis-plus.version>
     <mysql.version>8.0.23</mysql.version>
     <druid.version>1.1.21</druid.version>
+    <lombok.version>1.18.12</lombok.version>
   </properties>
 
   <dependencyManagement>
@@ -82,7 +86,7 @@
       <dependency>
         <groupId>org.projectlombok</groupId>
         <artifactId>lombok</artifactId>
-        <version>1.18.12</version>
+        <version>${lombok.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

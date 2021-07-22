@@ -5,7 +5,7 @@
   <parent>
     <artifactId>lite-conf</artifactId>
     <groupId>top.jiangyixin</groupId>
-    <version>1.0.0</version>
+    <version>${lite-conf.version}</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>lite-conf-client</artifactId>
@@ -47,6 +47,11 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>top.jiangyixin</groupId>
+      <artifactId>lite-conf-core</artifactId>
+      <version>${lite-conf.version}</version>
     </dependency>
   </dependencies>
 

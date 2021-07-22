@@ -4,8 +4,8 @@ import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.util.StringUtils;
-import top.jiangyixin.lite.conf.client.annotation.LiteConf;
-import top.jiangyixin.lite.conf.client.annotation.LiteConfField;
+import top.jiangyixin.lite.conf.core.annotation.LiteConf;
+import top.jiangyixin.lite.conf.core.annotation.LiteConfField;
 import top.jiangyixin.lite.conf.client.common.LiteConfConstant;
 import top.jiangyixin.lite.conf.client.util.ReflectUtils;
 

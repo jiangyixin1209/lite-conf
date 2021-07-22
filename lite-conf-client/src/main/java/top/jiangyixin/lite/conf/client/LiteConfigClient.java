@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import org.springframework.util.StringUtils;
-import top.jiangyixin.lite.conf.client.annotation.LiteConf;
+import top.jiangyixin.lite.conf.core.annotation.LiteConf;
 import top.jiangyixin.lite.conf.client.util.ClassUtils;
 
 /**

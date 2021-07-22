@@ -1,4 +1,4 @@
-package top.jiangyixin.lite.conf.client.annotation;
+package top.jiangyixin.lite.conf.core.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
